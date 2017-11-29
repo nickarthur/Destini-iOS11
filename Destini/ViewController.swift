@@ -34,25 +34,35 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomButton: UIButton!      // Has TAG = 2
     @IBOutlet weak var storyTextView: UILabel!
     
+    @IBOutlet weak var restartButton: UIButton!
+    
     // TODO Step 5: Initialise instance variables here
     var storyIndex : Int = 1
     
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
+    fileprivate func restart() {
         // TODO Step 3: Set the text for the storyTextView, topButton, bottomButton, and to T1_Story, T1_Ans1, and T1_Ans2
         
+        storyIndex = 1
         storyTextView.text = story1
         topButton.setTitle(answer1a, for: UIControlState.normal)
         bottomButton.setTitle(answer1b, for: .normal)
+        
+        restartButton.isHidden = true
+        topButton.isHidden = false
+        bottomButton.isHidden = false
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        restart()
     }
     
     
     // User hide the story buttons
-    fileprivate func hideButtons() {
+    fileprivate func hideStoryButtons() {
         topButton.isHidden = true
         bottomButton.isHidden = true
     }
@@ -78,20 +88,28 @@ class ViewController: UIViewController {
         else if (storyIndex == 3 && sender.tag == 1) {
             storyIndex = 6
             storyTextView.text = story6
-            hideButtons()
+            hideStoryButtons()
         }
             // advance to story  panel 5
         else if (storyIndex == 3 && sender.tag == 2) {
             storyIndex = 5
             storyTextView.text = story5
-            hideButtons()
+            hideStoryButtons()
         }
             // advance to story panel 4
         else if (storyIndex == 2 && sender.tag == 2) {
             storyIndex = 4
             storyTextView.text = story4
-            hideButtons()
+            hideStoryButtons()
         }
+        
+        if (storyIndex == 4 || storyIndex == 5 || storyIndex == 6) {
+            restartButton.isHidden = false
+        }
+    }
+    
+    @IBAction func restartPressed(_ sender: UIButton) {
+        restart()
     }
 }
 
